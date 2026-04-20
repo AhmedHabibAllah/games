@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة تخمين الرقم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4cc9f0;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a9a9a9;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .info-box {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            color: #4cc9f0;
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            font-size: 1.5rem;
+            color: #f72585;
+            font-weight: bold;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #guess-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            min-width: 150px;
+            border: 2px solid #4cc9f0;
+        }
+
+        #guess-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guess-btn {
+            background: linear-gradient(45deg, #4361ee, #3a0ca3);
+            color: white;
+        }
+
+        .guess-btn:hover {
+            background: linear-gradient(45deg, #3a0ca3, #4361ee);
+            transform: scale(1.05);
+        }
+
+        .hint-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid #4cc9f0;
+        }
+
+        .hint-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #f72585, #b5179e);
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(45deg, #b5179e, #f72585);
+        }
+
+        .message-area {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        #message {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .hint-area {
+            background: rgba(247, 37, 133, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border-right: 4px solid #f72585;
+        }
+
+        .attempts-history {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .attempts-history h3 {
+            margin-bottom: 10px;
+            color: #4cc9f0;
+        }
+
+        #attempts-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .attempt-item {
+            background: rgba(76, 201, 240, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .difficulty-selector {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .difficulty-btn.active {
+            background: rgba(76, 201, 240, 0.3);
+            border-color: #4cc9f0;
+        }
+
+        .leaderboard {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .leaderboard h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #f72585;
+        }
+
+        #leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 5px;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #4cc9f0;
+        }
+
+        .player-name {
+            flex: 1;
+            text-align: center;
+        }
+
+        .player-score {
+            color: #f72585;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #a9a9a9;
+            font-size: 0.9rem;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .info {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 لعبة تخمين الرقم</h1>
+            <p class="subtitle">حاول تخمين الرقم بين 1 و 100</p>
+        </header>
+
+        <main>
+            <div class="game-info">
+                <div class="info-box">
+                    <h3>المستوى</h3>
+                    <p id="level">1</p>
+                </div>
+                <div class="info-box">
+                    <h3>المحاولات</h3>
+                    <p id="attempts">0/<span id="max-attempts">10</span></p>
+                </div>
+                <div class="info-box">
+                    <h3>أفضل نتيجة</h3>
+                    <p id="high-score">0</p>
+                </div>
+                <div class="info-box">
+                    <h3>الوقت</h3>
+                    <p id="timer">0</p>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <input type="number" id="guess-input" min="1" max="100" placeholder="أدخل رقم بين 1 و 100">
+                <button id="guess-btn" class="guess-btn">🎯 تخمين</button>
+                <button id="hint-btn" class="hint-btn">💡 مساعدة</button>
+                <button id="reset-btn" class="reset-btn">🔄 إعادة</button>
+            </div>
+
+            <div class="message-area">
+                <div id="message" class="info">أدخل رقمك الأول!</div>
+                <div class="hint-area">
+                    <p id="hint-text"></p>
+                </div>
+            </div>
+
+            <div class="attempts-history">
+                <h3>📋 محاولات سابقة:</h3>
+                <div id="attempts-list"></div>
+            </div>
+
+            <div class="difficulty-selector">
+                <h3>📊 اختر مستوى الصعوبة:</h3>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn active" data-level="1">سهل (1-50)</button>
+                    <button class="difficulty-btn" data-level="2">متوسط (1-100)</button>
+                    <button class="difficulty-btn" data-level="3">صعب (1-200)</button>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h2>🏆 أفضل اللاعبين</h2>
+                <div id="leaderboard-list">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>لعبة تخمين الرقم &copy; 2023 | مصممة بلغة JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        // بيانات اللعبة
+        const gameData = {
+            config: {
+                levels: {
+                    1: { maxNumber: 50, maxAttempts: 10, pointsMultiplier: 1 },
+                    2: { maxNumber: 100, maxAttempts: 8, pointsMultiplier: 2 },
+                    3: { maxNumber: 200, maxAttempts: 6, pointsMultiplier: 3 }
+                },
+                hints: [
+                    "جرب رقمًا في المنتصف",
+                    "الرقم أكبر من ذلك",
+                    "الرقم أصغر من ذلك",
+                    "أنت قريب جداً!",
+                    "جرب رقمًا زوجيًا",
+                    "جرب رقمًا فرديًا"
+                ]
+            },
+            leaderboard: [
+                { name: "أحمد", score: 950, level: 3, attempts: 4 },
+                { name: "سارة", score: 850, level: 2, attempts: 6 },
+                { name: "محمد", score: 750, level: 1, attempts: 3 },
+                { name: "فاطمة", score: 650, level: 2, attempts: 7 },
+                { name: "خالد", score: 550, level: 3, attempts: 5 }
+            ]
+        };
+
+        // حالة اللعبة
+        let gameState = {
+            targetNumber: 0,
+            currentLevel: 1,
+            attempts: 0,
+            maxAttempts: 10,
+            score: 0,
+            gameActive: true,
+            startTime: 0,
+            timer: 0,
+            timerInterval: null,
+            previousGuesses: [],
+            highScore: localStorage.getItem('highScore') || 0
+        };
+
+        // عناصر DOM
+        const elements = {
+            guessInput: document.getElementById('guess-input'),
+            guessBtn: document.getElementById('guess-btn'),
+            hintBtn: document.getElementById('hint-btn'),
+            resetBtn: document.getElementById('reset-btn'),
+            message: document.getElementById('message'),
+            hintText: document.getElementById('hint-text'),
+            attemptsList: document.getElementById('attempts-list'),
+            level: document.getElementById('level'),
+            attempts: document.getElementById('attempts'),
+            maxAttempts: document.getElementById('max-attempts'),
+            highScore: document.getElementById('high-score'),
+            timer: document.getElementById('timer'),
+            difficultyButtons: document.querySelectorAll('.difficulty-btn'),
+            leaderboardList: document.getElementById('leaderboard-list')
+        };
+
+        // تهيئة اللعبة
+        function initGame() {
+            resetGame();
+            updateDisplay();
+            loadLeaderboard();
+            startTimer();
+
+            // تعيين الأحداث
+            elements.guessBtn.addEventListener('click', handleGuess);
+            elements.hintBtn.addEventListener('click', showHint);
+            elements.resetBtn.addEventListener('click', resetGame);
+            elements.guessInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleGuess();
+            });
+
+            // أحداث أزرار الصعوبة
+            elements.difficultyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    elements.difficultyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    gameState.currentLevel = parseInt(btn.dataset.level);
+                    resetGame();
+                });
+            });
+        }
+
+        // إعادة تعيين اللعبة
+        function resetGame() {
+            const levelConfig = gameData.config.levels[gameState.currentLevel];
+            gameState.targetNumber = Math.floor(Math.random() * levelConfig.maxNumber) + 1;
+            gameState.attempts = 0;
+            gameState.maxAttempts = levelConfig.maxAttempts;
+            gameState.score = 0;
+            gameState.gameActive = true;
+            gameState.previousGuesses = [];
+
+            elements.guessInput.value = '';
+            elements.guessInput.disabled = false;
+            elements.guessBtn.disabled = false;
+            elements.hintBtn.disabled = false;
+
+            elements.message.textContent = `لقد بدأت لعبة جديدة! خمن رقم بين 1 و ${levelConfig.maxNumber}`;
+            elements.message.className = 'info';
+            elements.hintText.textContent = '';
+            elements.attemptsList.innerHTML = '';
+
+            updateDisplay();
+
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+            }
+            gameState.startTime = Date.now();
+            gameState.timer = 0;
+            startTimer();
+        }
+
+        // معالجة التخمين
+        function handleGuess() {
+            if (!gameState.gameActive) return;
+
+            const guess = parseInt(elements.guessInput.value);
+
+            if (!guess || guess < 1 || guess > gameData.config.levels[gameState.currentLevel].maxNumber) {
+                showMessage('الرجاء إدخال رقم صحيح ضمن النطاق', 'error');
+                return;
+            }
+
+            gameState.attempts++;
+            gameState.previousGuesses.push(guess);
+
+            // إضافة المحاولة للقائمة
+            const guessItem = document.createElement('div');
+            guessItem.className = 'attempt-item';
+            guessItem.textContent = `محاولة ${gameState.attempts}: ${guess}`;
+            elements.attemptsList.appendChild(guessItem);
+
+            // التحقق من التخمين
+            if (guess === gameState.targetNumber) {
+                endGame(true);
+            } else {
+                checkGuess(guess);
+            }
+
+            elements.guessInput.value = '';
+            elements.guessInput.focus();
+            updateDisplay();
+        }
+
+        // التحقق من التخمين
+        function checkGuess(guess) {
+            const difference = Math.abs(guess - gameState.targetNumber);
+            let message = '';
+            let className = '';
+
+            if (difference <= 5) {
+                message = 'ساخن جداً!';
+                className = 'warning';
+            } else if (difference <= 10) {
+                message = 'ساخن!';
+                className = 'warning';
+            } else if (difference <= 20) {
+                message = 'دافئ';
+                className = 'info';
+            } else {
+                message = 'بارد';
+                className = 'info';
+            }
+
+            if (guess < gameState.targetNumber) {
+                message += ' - الرقم أكبر';
+            } else {
+                message += ' - الرقم أصغر';
+            }
+
+            showMessage(message, className);
+
+            if (gameState.attempts >= gameState.maxAttempts) {
+                endGame(false);
+            }
+        }
+
+        // إنهاء اللعبة
+        function endGame(isWin) {
+            gameState.gameActive = false;
+            elements.guessInput.disabled = true;
+            elements.guessBtn.disabled = true;
+            elements.hintBtn.disabled = true;
+
+            const levelConfig = gameData.config.levels[gameState.currentLevel];
+            const timeBonus = Math.max(0, 1000 - gameState.timer);
+            const attemptsBonus = (gameState.maxAttempts - gameState.attempts) * 50;
+            gameState.score = (isWin ? 500 : 100) * levelConfig.pointsMultiplier + timeBonus + attemptsBonus;
+
+            if (isWin) {
+                showMessage(`مبروك! لقد وجدت الرقم ${gameState.targetNumber} في ${gameState.attempts} محاولات. النقاط: ${gameState.score}`, 'success');
+
+                // تحديث أفضل نتيجة
+                if (gameState.score > gameState.highScore) {
+                    gameState.highScore = gameState.score;
+                    localStorage.setItem('highScore', gameState.highScore);
+                    elements.highScore.textContent = gameState.highScore;
+                }
+
+                // إضافة للقادة
+                const playerName = prompt('مبروك! أدخل اسمك لسجل الأبطال:') || 'لاعب';
+                addToLeaderboard(playerName, gameState.score, gameState.currentLevel, gameState.attempts);
+            } else {
+                showMessage(`انتهت المحاولات! الرقم كان ${gameState.targetNumber}. حاول مرة أخرى!`, 'error');
+            }
+
+            clearInterval(gameState.timerInterval);
+        }
+
+        // عرض رسالة
+        function showMessage(text, className) {
+            elements.message.textContent = text;
+            elements.message.className = className;
+        }
+
+        // عرض تلميح
+        function showHint() {
+            if (!gameState.gameActive || gameState.previousGuesses.length === 0) {
+                showMessage('قم بتخمين أولاً للحصول على تلميح', 'info');
+                return;
+            }
+
+            const lastGuess = gameState.previousGuesses[gameState.previousGuesses.length - 1];
+            const hint = gameData.config.hints[Math.floor(Math.random() * gameData.config.hints.length)];
+
+            let customHint = hint;
+            if (lastGuess < gameState.targetNumber) {
+                customHint = 'جرب رقمًا أكبر';
+            } else if (lastGuess > gameState.targetNumber) {
+                customHint = 'جرب رقمًا أصغر';
+            }
+
+            elements.hintText.textContent = `💡 تلميح: ${customHint}`;
+        }
+
+        // تحديث العرض
+        function updateDisplay() {
+            elements.level.textContent = gameState.currentLevel;
+            elements.attempts.textContent = gameState.attempts;
+            elements.maxAttempts.textContent = gameState.maxAttempts;
+            elements.highScore.textContent = gameState.highScore;
+
+            const levelConfig = gameData.config.levels[gameState.currentLevel];
+            elements.guessInput.max = levelConfig.maxNumber;
+            elements.guessInput.placeholder = `أدخل رقم بين 1 و ${levelConfig.maxNumber}`;
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = setInterval(() => {
+                gameState.timer = Math.floor((Date.now() - gameState.startTime) / 1000);
+                elements.timer.textContent = `${gameState.timer} ثانية`;
+            }, 1000);
+        }
+
+        // تحميل قائمة الأبطال
+        function loadLeaderboard() {
+            elements.leaderboardList.innerHTML = '';
+
+            // ترتيب حسب النقاط
+            const sortedLeaderboard = [...gameData.leaderboard].sort((a, b) => b.score - a.score);
+
+            sortedLeaderboard.forEach((player, index) => {
+                const item = document.createElement('div');
+                item.className = 'leaderboard-item';
+                item.innerHTML = `
+                    <span class="rank">#${index + 1}</span>
+                    <span class="player-name">${player.name}</span>
+                    <span class="player-score">${player.score} نقطة</span>
+                `;
+                elements.leaderboardList.appendChild(item);
+            });
+        }
+
+        // إضافة لاعب لقائمة الأبطال
+        function addToLeaderboard(name, score, level, attempts) {
+            gameData.leaderboard.push({ name, score, level, attempts });
+            loadLeaderboard();
+        }
+
+        // بدء اللعبة عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+
+</html>

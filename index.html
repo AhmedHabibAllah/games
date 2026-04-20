@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم الألعاب الممتع - موقع ألعاب للأطفال والشباب</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="parallax-bg"></div>
+    <div class="container">
+        <!-- منطقة اللعبة الرئيسية -->
+        <main>
+            <!-- منطقة عرض اللعبة -->
+            <div id="game-viewer" class="game-viewer">
+                <div class="side-games-list" id="previous-games-list"></div>
+                <div class="game-display-container">
+                    <div class="game-display-header">
+                        <h3 id="game-viewer-title"></h3>
+                        <div class="game-controls">
+                            <button id="game-viewer-fullscreen" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
+                            <button id="game-viewer-reload" title="إعادة تشغيل اللعبة"><i class="fas fa-redo"></i></button>
+                            <button id="game-viewer-share" title="مشاركة اللعبة"><i class="fas fa-share-alt"></i></button>
+                            <button id="sidebar-toggle" title="إخفاء/إظهار القوائم"><i class="fas fa-columns"></i></button>
+                            <button id="game-viewer-close" title="العودة للقائمة"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div id="game-frame-wrapper" class="game-frame-wrapper">
+                        <div id="game-loader" class="loading-spinner"></div>
+                        <!-- Iframe will be inserted here by JS -->
+                    </div>
+                </div>
+                <div class="side-games-list" id="next-games-list"></div>
+            </div>
+
+            <!-- قسم ألعاب مشابهة -->
+            <div id="similar-games-section" class="similar-games-section" style="display: none;">
+                <h3><i class="fas fa-star"></i> <span data-i18n="similarGames">ألعاب مشابهة قد تعجبك</span></h3>
+                <div class="games-grid" id="similar-games-grid"></div>
+            </div>
+
+            <!-- شبكة الألعاب -->
+            <div class="games-grid" id="games-grid">
+                <!-- رأس الموقع (كعنصر داخل الشبكة) -->
+                <header>
+                    <div class="logo">
+                        <i class="fas fa-gamepad"></i>
+                        <h1 data-i18n="siteTitle">عالم الألعاب</h1>
+                    </div>
+        
+                    <div class="header-controls">
+                        <!-- زر البحث وشريط البحث -->
+                        <div class="search-wrapper" id="search-wrapper">
+                            <input type="text" id="search-input" class="search-input" placeholder="ابحث..." data-i18n-placeholder="searchPlaceholder">
+                            <button id="search-toggle-btn" class="icon-btn" title="بحث"><i class="fas fa-search"></i></button>
+                        </div>
+        
+                        <!-- زر الوضع الليلي -->
+                        <button id="header-theme-btn" class="icon-btn" title="تبديل المظهر"><i class="fas fa-moon"></i></button>
+        
+                        <!-- زر الإعدادات -->
+                        <button id="settings-btn" class="icon-btn" title="الإعدادات">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </header>
+                <!-- سيتم إضافة الألعاب ديناميكياً بواسطة جافاسكريبت -->
+            </div>
+        </main>
+
+        <!-- تصنيفات الألعاب (في الأسفل) -->
+        <div class="bottom-categories">
+            <div class="categories-container" id="categories-container">
+                <button class="category-btn active" data-category="all" data-i18n="all">الكل</button>
+                <button class="category-btn" data-category="favorites"><i class="fas fa-heart"></i> <span data-i18n="favorites">المفضلة</span></button>
+            </div>
+        </div>
+
+        <!-- تذييل الصفحة -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-heart"></i> <span data-i18n="whyUs">لماذا موقعنا؟</span></h4>
+                    <p data-i18n="whyUsDesc">موقعنا يوفر أفضل الألعاب المناسبة لجميع الأعمار بتصميم جذاب وألوان مبهرة!</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-users"></i> <span data-i18n="forEveryone">للجميع</span></h4>
+                    <p data-i18n="forEveryoneDesc">ألعاب مناسبة للأطفال والشباب، آمنة وممتعة!</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-plus-circle"></i> <span data-i18n="addGames">إضافة ألعاب</span></h4>
+                    <p data-i18n="addGamesDesc">سهولة إضافة الألعاب الجديدة بدون قواعد بيانات!</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p data-i18n="copyright">© 2023 عالم الألعاب الممتع | تصميم وتطوير: فريق الإبداع</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- نافذة المشاركة المخصصة -->
+    <div id="share-modal" class="share-modal">
+        <div class="share-content">
+            <div class="share-header">
+                <h3 data-i18n="shareTitle">مشاركة اللعبة</h3>
+                <button id="close-share-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="share-options">
+                <a href="#" id="share-whatsapp" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                <a href="#" id="share-facebook" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i> فيسبوك</a>
+                <a href="#" id="share-twitter" target="_blank" class="share-btn twitter"><i class="fab fa-twitter"></i> تويتر</a>
+                <button id="share-copy" class="share-btn copy"><i class="fas fa-copy"></i> <span data-i18n="copyLink">نسخ الرابط</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الإعدادات -->
+    <div id="settings-modal" class="share-modal">
+        <div class="share-content settings-content">
+            <div class="share-header">
+                <h3 data-i18n="settings">الإعدادات</h3>
+                <button id="close-settings-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="settings-options">
+                <div class="setting-item">
+                    <span data-i18n="language">اللغة</span>
+                    <select id="language-select">
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                        <option value="de">Deutsch</option>
+                        <option value="fr">Français</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span data-i18n="themeColor">لون الموقع</span>
+                    <div class="color-picker-container">
+                        <button class="color-option" style="background: #FFD700;" data-color="#FFD700"></button>
+                        <button class="color-option" style="background: #FF0055;" data-color="#FF0055"></button>
+                        <button class="color-option" style="background: #00FFCC;" data-color="#00FFCC"></button>
+                        <button class="color-option" style="background: #BD00FF;" data-color="#BD00FF"></button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <span data-i18n="appearance">المظهر</span>
+                    <button id="theme-toggle-settings" class="theme-toggle-btn-settings"><i class="fas fa-sun"></i> <span data-i18n="lightMode">الوضع النهاري</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر العودة للأعلى -->
+    <button id="back-to-top" title="العودة للأعلى"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
