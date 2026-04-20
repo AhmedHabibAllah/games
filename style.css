@@ -433,30 +433,21 @@ footer {
 /* منطقة عرض اللعبة الجديدة */
 .game-viewer {
     display: none;
-    gap: 20px;
-    margin-bottom: 30px;
-    align-items: flex-start;
-}
-
-.side-games-list {
-    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #000;
     flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    max-height: 70vh;
-    overflow-y: auto;
-    padding: 10px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 15px;
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
 }
 
-/* إخفاء القوائم الجانبية عند التفعيل */
-.game-viewer.sidebars-hidden .side-games-list {
-    display: none;
-}
-
-.game-viewer.sidebars-hidden .game-display-container {
-    min-width: 100%;
+.side-games-list, #sidebar-toggle {
+    display: none !important;
 }
 
 /* Custom scrollbar for side lists */
@@ -535,12 +526,13 @@ footer {
 }
 
 .game-display-container {
-    flex: 3; /* This will make it wider than sidebars */
-    min-width: 50%; /* As requested */
-    background: rgba(0,0,0,0.3);
-    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
 .game-display-header {
@@ -552,8 +544,12 @@ footer {
 }
 
 .game-display-header h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     color: var(--main-color);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .game-controls {
@@ -579,10 +575,11 @@ footer {
 }
 
 .game-frame-wrapper {
-    position: relative;
+    flex: 1;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    background-color: #000;
+    height: 100%;
+    position: relative;
+    background: #000;
 }
 
 .game-frame-wrapper iframe {
@@ -656,46 +653,6 @@ footer {
         font-size: 1.8rem;
     }
 
-    .game-viewer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        z-index: 9999;
-        background: var(--bg-color);
-        flex-direction: column;
-        gap: 0;
-    }
-    .side-games-list {
-        display: none;
-    }
-    .game-display-container {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .game-display-header {
-        padding: 10px;
-        flex-shrink: 0;
-    }
-
-    .game-display-header h3 {
-        font-size: 1.1rem;
-    }
-
-    .game-frame-wrapper {
-        padding-top: 0;
-        flex: 1;
-        height: 100%;
-        min-height: auto;
-    }
     
     .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -709,11 +666,6 @@ footer {
 @media (max-width: 480px) {
     .container {
         padding: 10px;
-    }
-
-    .game-frame-wrapper {
-        padding-top: 0;
-        min-height: auto;
     }
 
     .games-grid {

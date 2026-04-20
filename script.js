@@ -572,10 +572,8 @@ function showGameViewer(game) {
     gamesGrid.style.display = 'none';
     gameViewer.style.display = 'flex';
 
-    // منع التمرير في الخلفية على الأجهزة المحمولة لتجربة ملء الشاشة
-    if (window.innerWidth <= 768) {
-        document.body.style.overflow = 'hidden';
-    }
+    // منع التمرير في الخلفية لتجربة ملء الشاشة على جميع الأجهزة
+    document.body.style.overflow = 'hidden';
 
     // تحديث العنوان
     gameViewerTitle.textContent = game.title;
