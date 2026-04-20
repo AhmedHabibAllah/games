@@ -572,6 +572,11 @@ function showGameViewer(game) {
     gamesGrid.style.display = 'none';
     gameViewer.style.display = 'flex';
 
+    // منع التمرير في الخلفية على الأجهزة المحمولة لتجربة ملء الشاشة
+    if (window.innerWidth <= 768) {
+        document.body.style.overflow = 'hidden';
+    }
+
     // تحديث العنوان
     gameViewerTitle.textContent = game.title;
 
@@ -612,6 +617,9 @@ function hideGameViewer() {
     gameViewer.style.display = 'none';
     similarGamesSection.style.display = 'none'; // إخفاء قسم الألعاب المشابهة
     gameFrameWrapper.innerHTML = ''; // إيقاف اللعبة بإزالة الـ iframe
+
+    // إعادة تفعيل التمرير عند إغلاق اللعبة
+    document.body.style.overflow = 'auto';
     
     // إزالة معلمات اللعبة من الرابط
     const newUrl = new URL(window.location);
