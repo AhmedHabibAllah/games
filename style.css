@@ -658,12 +658,27 @@ footer {
 
     .game-viewer {
         flex-direction: column;
+        gap: 10px;
     }
     .side-games-list {
         display: none; /* Hide side lists on smaller screens for simplicity */
     }
     .game-display-container {
         min-width: 100%;
+        border-radius: 12px;
+    }
+
+    .game-display-header {
+        padding: 10px 15px;
+    }
+
+    .game-display-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .game-frame-wrapper {
+        padding-top: 75%; /* نسبة 4:3 للتابلت لجعل اللعبة أكبر */
+        min-height: 400px; /* ضمان حد أدنى للارتفاع */
     }
     
     .games-grid {
@@ -678,6 +693,11 @@ footer {
 @media (max-width: 480px) {
     .container {
         padding: 10px;
+    }
+
+    .game-frame-wrapper {
+        padding-top: 100%; /* نسبة 1:1 (مربع) للموبايل لزيادة مساحة اللعب */
+        min-height: 450px;
     }
 
     .games-grid {
