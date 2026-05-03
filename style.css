@@ -20,7 +20,7 @@ body {
     background: transparent;
     color: var(--text-color);
     min-height: 100vh;
-    direction: rtl;
+    direction: ltr;
     overflow: auto;
 }
 
@@ -404,7 +404,7 @@ footer {
     padding: 20px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
-    border-right: 4px solid #FFD700;
+    border-left: 4px solid #FFD700;
 }
 
 .footer-section h4 {
@@ -433,21 +433,36 @@ footer {
 /* منطقة عرض اللعبة الجديدة */
 .game-viewer {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 10000;
-    background: #000;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
+    height: 700px; /* ارتفاع مناسب للعبة */
+    background: var(--card-bg);
+    flex-direction: row;
+    margin-bottom: 40px;
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     align-items: stretch;
 }
 
-.side-games-list, #sidebar-toggle {
-    display: none !important;
+.side-games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 180px;
+    overflow-y: auto;
+    padding: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 15px;
+}
+
+.game-viewer.sidebars-hidden .side-games-list {
+    display: none;
+}
+
+#sidebar-toggle {
+    display: flex;
 }
 
 /* Custom scrollbar for side lists */
@@ -526,10 +541,10 @@ footer {
 }
 
 .game-display-container {
-    width: 100%;
+    flex: 1; /* تأخذ المساحة المتبقية */
     height: 100%;
     background: #000;
-    border-radius: 0;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -626,6 +641,21 @@ footer {
     display: inline-block;
 }
 
+/* مساحة إعلانية */
+.ad-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--main-color);
+    font-weight: bold;
+    margin: 20px 0;
+    min-height: 90px;
+    border-radius: 10px;
+}
+
 /* تصميم متجاوب */
 @media (max-width: 1200px) {
     main {
@@ -657,6 +687,12 @@ footer {
     .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
+
+    .game-viewer {
+        height: 500px;
+        flex-direction: column;
+    }
+    .side-games-list { display: none !important; }
     
     .footer-content {
         grid-template-columns: 1fr;

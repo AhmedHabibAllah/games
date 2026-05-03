@@ -2,85 +2,112 @@
 // لإضافة لعبة جديدة، فقط أضف كائن جديد لهذه المصفوفة
 const games = [
     {
+        id: 12,
+        title: "Pegs X Stickers",
+        description: "A fun puzzle and logic game by Mister Morris",
+        folder: "",
+        image: "https://img.itch.zone/aW1nLzE4NjYxOTY3LnBuZw==/315x250%23c/RkPhXF.png", 
+        file: "https://itch.io/embed/4439279",
+        category: "Puzzle"
+    },
+    {
+        id: 11,
+        title: "Exciting Road Challenge",
+        description: "A fun new challenge from GameDistribution",
+        folder: "", 
+        image: "https://img.gamedistribution.com/30741355ad454b8cae5d648cb5caa244-512x512.jpg",
+        file: "https://html5.gamedistribution.com/30741355ad454b8cae5d648cb5caa244/?gd_sdk_referrer_url=https://www.example.com/games/road-challenge",
+        category: "Racing"
+    },
+    {
+        id: 10,
+        title: "New Adventure Game",
+        description: "Fun external game from GameDistribution",
+        folder: "", // نتركه فارغاً للألعاب التي تستخدم روابط خارجية
+        image: "https://img.gamedistribution.com/ad37a85f16e246fabdc818f375a5eb45-512x512.jpg",
+        file: "https://html5.gamedistribution.com/ad37a85f16e246fabdc818f375a5eb45/?gd_sdk_referrer_url=https://www.example.com/games/new-game",
+        category: "Adventure"
+    },
+    {
         id: 9, // رقم تسلسلي جديد
         title: "Ulrich Guess",
-        description: " خمن ",
+        description: "Guess the pattern",
         folder: "ulrich", // اسم المجلد الذي أنشأته
         image: "ulrich.jpg",
         file: "index.html", // اسم الملف الرئيسي للعبة داخل المجلد
-        category: "ذكاء"
+        category: "Puzzle"
     },
     {
         id: 1,
-        title: "لعبة الذاكرة",
-        description: "اختبر ذاكرتك في هذه اللعبة الممتعة",
+        title: "Memory Game",
+        description: "Test your memory in this fun game",
         folder: "memory-game",
         image: "memory.jpg",
         file: "index.html",
-        category: "ذكاء"
+        category: "Puzzle"
     },
     {
         id: 2,
-        title: "سباق السيارات",
-        description: "تحدي السرعة والإثارة في سباق سيارات",
+        title: "Car Racing",
+        description: "Speed and excitement in a car race",
         folder: "car-race",
         image: "car-race.jpg",
         file: "game.html",
-        category: "سيارات"
+        category: "Racing"
     },
     {
         id: 3,
-        title: "لعبة الأرقام",
-        description: "تحدي الأرقام والرياضيات",
+        title: "Numbers Game",
+        description: "Numbers and math challenge",
         folder: "numbers-game",
         image: "numbers.jpg",
         file: "index.html",
-        category: "تعليمية"
+        category: "Educational"
     },
     {
         id: 4,
-        title: "مغامرة الفضاء",
-        description: "استكشف الفضاء في مغامرة مثيرة",
+        title: "Space Adventure",
+        description: "Explore space in an exciting adventure",
         folder: "space-adventure",
         image: "space.jpg",
         file: "game.html",
-        category: "مغامرات"
+        category: "Adventure"
     },
     {
         id: 5,
-        title: "لعبة الطيور",
-        description: "ساعد الطيور في الوصول إلى أعشاشها",
+        title: "Birds Game",
+        description: "Help birds reach their nests",
         folder: "birds-game",
         image: "birds.jpg",
         file: "index.html",
-        category: "مغامرات"
+        category: "Adventure"
     },
     {
         id: 6,
-        title: "مطابقة الألوان",
-        description: "طابق الألوان المتشابهة بسرعة",
+        title: "Color Match",
+        description: "Match similar colors quickly",
         folder: "colors-game",
         image: "colors.jpg",
         file: "game.html",
-        category: "سرعة"
+        category: "Speed"
     },
     {
         id: 7,
-        title: "لعبة الألغاز",
-        description: "حل الألغاز المثيرة والممتعة",
+        title: "Puzzle Game",
+        description: "Solve exciting and fun puzzles",
         folder: "puzzle-game",
         image: "puzzle.jpg",
         file: "index.html",
-        category: "ذكاء"
+        category: "Puzzle"
     },
     {
         id: 8,
-        title: "كرة السلة",
-        description: "تحدي في رمي كرة السلة",
+        title: "Basketball",
+        description: "Basketball shooting challenge",
         folder: "basketball",
         image: "basketball.jpg",
         file: "game.html",
-        category: "رياضة"
+        category: "Sports"
     },
 ];
 
@@ -137,7 +164,7 @@ let gameVisits = {}; // لتتبع عدد زيارات كل لعبة
 let currentCategory = 'all';
 let searchQuery = '';
 let currentlyVisibleGames = []; // لتخزين الألعاب المعروضة حالياً
-let currentLang = 'ar';
+let currentLang = 'en';
 let displayedCount = 0;
 const ITEMS_PER_PAGE = 12;
 
@@ -213,8 +240,8 @@ const translations = {
 
 // تهيئة الموقع
 function init() {
-    // خلط الألعاب عشوائياً عند البدء
-    games.sort(() => Math.random() - 0.5);
+    // عرض الألعاب المضافة حديثاً في البداية (ترتيب تنازلي حسب الرقم التعريفي)
+    games.sort((a, b) => b.id - a.id);
 
     // تفعيل تأثير Parallax للخلفية
     document.addEventListener("mousemove", (e) => {
@@ -233,7 +260,12 @@ function init() {
     loadVisits(); // تحميل عدد الزيارات
     
     // تحميل اللغة المحفوظة
-    const savedLang = localStorage.getItem('language') || 'ar';
+    let savedLang = localStorage.getItem('language');
+    // Force reset if it was Arabic before
+    if (!savedLang || savedLang === 'ar') {
+        savedLang = 'en';
+        localStorage.setItem('language', 'en');
+    }
     setLanguage(savedLang);
     languageSelect.value = savedLang;
 
@@ -439,6 +471,10 @@ function toggleFavorite(e, gameId) {
 
 // عرض التصنيفات
 function renderCategories() {
+    // Clear dynamically added categories to avoid duplicates
+    const dynamicBtns = categoriesContainer.querySelectorAll('.category-btn:not([data-category="all"]):not([data-category="favorites"])');
+    dynamicBtns.forEach(btn => btn.remove());
+
     const uniqueCategories = [...new Set(games.map(game => game.category))];
     
     uniqueCategories.forEach(cat => {
@@ -535,7 +571,8 @@ function loadMoreGames() {
         gameCard.className = "game-card";
         
         const isFav = favorites.includes(game.id);
-        const imagePath = game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`;
+        // التحقق من وجود رابط صورة لتجنب المسارات الخاطئة
+        const imagePath = game.image ? (game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`) : '';
         
         gameCard.innerHTML = `
             <div class="game-fallback-icon"><i class="fas fa-gamepad"></i></div>
@@ -568,12 +605,8 @@ function loadMoreGames() {
 function showGameViewer(game) {
     currentGame = game;
     
-    // إخفاء الشبكة والأدوات وإظهار عارض اللعبة
-    gamesGrid.style.display = 'none';
+    // إظهار عارض اللعبة كجزء من الصفحة
     gameViewer.style.display = 'flex';
-
-    // منع التمرير في الخلفية لتجربة ملء الشاشة على جميع الأجهزة
-    document.body.style.overflow = 'hidden';
 
     // تحديث العنوان
     gameViewerTitle.textContent = game.title;
@@ -586,7 +619,8 @@ function showGameViewer(game) {
     gameFrameWrapper.appendChild(gameLoader); // إعادة إضافة اللودر لأنه حُذف في السطر السابق
 
     const iframe = document.createElement("iframe");
-    iframe.src = `games/${game.folder}/${game.file}`;
+    // التحقق مما إذا كان الرابط خارجياً (يبدأ بـ http) أو داخلياً
+    iframe.src = game.file.startsWith('http') ? game.file : `games/${game.folder}/${game.file}`;
     iframe.allowFullscreen = true;
     
     // إخفاء شريط التحميل عند انتهاء تحميل اللعبة
@@ -600,6 +634,9 @@ function showGameViewer(game) {
     incrementVisit(game.id);
     populateSideLists(game.id);
     renderSimilarGames(game); // عرض الألعاب المشابهة
+
+    // التمرير تلقائياً إلى منطقة اللعبة لضمان رؤيتها
+    gameViewer.scrollIntoView({ behavior: 'smooth' });
 
     // تحديث الرابط في المتصفح
     const newUrl = new URL(window.location);
@@ -616,15 +653,10 @@ function hideGameViewer() {
     similarGamesSection.style.display = 'none'; // إخفاء قسم الألعاب المشابهة
     gameFrameWrapper.innerHTML = ''; // إيقاف اللعبة بإزالة الـ iframe
 
-    // إعادة تفعيل التمرير عند إغلاق اللعبة
-    document.body.style.overflow = 'auto';
-    
     // إزالة معلمات اللعبة من الرابط
     const newUrl = new URL(window.location);
     newUrl.searchParams.delete('game');
     window.history.pushState({}, '', newUrl);
-
-    gamesGrid.style.display = 'grid';
     
     currentGame = null;
 }
@@ -640,7 +672,8 @@ function populateSideLists(currentGameId) {
     otherGames.forEach((game, index) => {
         const sideCard = document.createElement('div');
         sideCard.className = 'side-game-card';
-        const imagePath = game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`;
+        const imagePath = game.image ? (game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`) : '';
+
         sideCard.innerHTML = `
             <div class="game-fallback-icon"><i class="fas fa-gamepad"></i></div>
             <img src="${imagePath}" alt="${game.title}" onerror="this.style.display='none'">
@@ -677,7 +710,7 @@ function renderSimilarGames(currentGame) {
         similarGames.forEach(game => {
             const gameCard = document.createElement("div");
             gameCard.className = "game-card";
-            const imagePath = game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`;
+            const imagePath = game.image ? (game.image.startsWith('http') ? game.image : `games/${game.folder}/${game.image}`) : '';
             
             gameCard.innerHTML = `
                 <div class="game-fallback-icon"><i class="fas fa-gamepad"></i></div>

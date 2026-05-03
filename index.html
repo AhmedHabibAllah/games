@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الألعاب الممتع - موقع ألعاب للأطفال والشباب</title>
+    <title>Fun Game World - Games for Everyone</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -16,15 +16,18 @@
         <!-- منطقة اللعبة الرئيسية -->
         <main>
             <!-- منطقة عرض اللعبة -->
+            <!-- مساحة إعلانية علوية -->
+            <div class="ad-container">مساحة إعلانية علوية (Ads Here)</div>
+
             <div id="game-viewer" class="game-viewer">
                 <div class="side-games-list" id="previous-games-list"></div>
                 <div class="game-display-container">
                     <div class="game-display-header">
                         <h3 id="game-viewer-title"></h3>
                         <div class="game-controls">
-                            <button id="game-viewer-fullscreen" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
-                            <button id="game-viewer-reload" title="إعادة تشغيل اللعبة"><i class="fas fa-redo"></i></button>
-                            <button id="game-viewer-share" title="مشاركة اللعبة"><i class="fas fa-share-alt"></i></button>
+                            <button id="game-viewer-fullscreen" title="Fullscreen"><i class="fas fa-expand"></i></button>
+                            <button id="game-viewer-reload" title="Reload Game"><i class="fas fa-redo"></i></button>
+                            <button id="game-viewer-share" title="Share Game"><i class="fas fa-share-alt"></i></button>
                             <button id="sidebar-toggle" title="إخفاء/إظهار القوائم"><i class="fas fa-columns"></i></button>
                             <button id="game-viewer-close" title="العودة للقائمة"><i class="fas fa-times"></i></button>
                         </div>
@@ -37,9 +40,12 @@
                 <div class="side-games-list" id="next-games-list"></div>
             </div>
 
+            <!-- مساحة إعلانية تحت اللعبة -->
+            <div class="ad-container">مساحة إعلانية تحت اللعبة (Ads Here)</div>
+
             <!-- قسم ألعاب مشابهة -->
             <div id="similar-games-section" class="similar-games-section" style="display: none;">
-                <h3><i class="fas fa-star"></i> <span data-i18n="similarGames">ألعاب مشابهة قد تعجبك</span></h3>
+                <h3><i class="fas fa-star"></i> <span data-i18n="similarGames">Similar Games You Might Like</span></h3>
                 <div class="games-grid" id="similar-games-grid"></div>
             </div>
 
@@ -49,13 +55,13 @@
                 <header>
                     <div class="logo">
                         <i class="fas fa-gamepad"></i>
-                        <h1 data-i18n="siteTitle">عالم الألعاب</h1>
+                        <h1 data-i18n="siteTitle">Fun Game World</h1>
                     </div>
         
                     <div class="header-controls">
                         <!-- زر البحث وشريط البحث -->
                         <div class="search-wrapper" id="search-wrapper">
-                            <input type="text" id="search-input" class="search-input" placeholder="ابحث..." data-i18n-placeholder="searchPlaceholder">
+                            <input type="text" id="search-input" class="search-input" placeholder="Search..." data-i18n-placeholder="searchPlaceholder">
                             <button id="search-toggle-btn" class="icon-btn" title="بحث"><i class="fas fa-search"></i></button>
                         </div>
         
@@ -75,8 +81,8 @@
         <!-- تصنيفات الألعاب (في الأسفل) -->
         <div class="bottom-categories">
             <div class="categories-container" id="categories-container">
-                <button class="category-btn active" data-category="all" data-i18n="all">الكل</button>
-                <button class="category-btn" data-category="favorites"><i class="fas fa-heart"></i> <span data-i18n="favorites">المفضلة</span></button>
+                <button class="category-btn active" data-category="all" data-i18n="all">All</button>
+                <button class="category-btn" data-category="favorites"><i class="fas fa-heart"></i> <span data-i18n="favorites">Favorites</span></button>
             </div>
         </div>
 
@@ -84,20 +90,20 @@
         <footer>
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4><i class="fas fa-heart"></i> <span data-i18n="whyUs">لماذا موقعنا؟</span></h4>
-                    <p data-i18n="whyUsDesc">موقعنا يوفر أفضل الألعاب المناسبة لجميع الأعمار بتصميم جذاب وألوان مبهرة!</p>
+                    <h4><i class="fas fa-heart"></i> <span data-i18n="whyUs">Why Us?</span></h4>
+                    <p data-i18n="whyUsDesc">Our site provides the best games for all ages with amazing designs!</p>
                 </div>
                 <div class="footer-section">
-                    <h4><i class="fas fa-users"></i> <span data-i18n="forEveryone">للجميع</span></h4>
-                    <p data-i18n="forEveryoneDesc">ألعاب مناسبة للأطفال والشباب، آمنة وممتعة!</p>
+                    <h4><i class="fas fa-users"></i> <span data-i18n="forEveryone">For Everyone</span></h4>
+                    <p data-i18n="forEveryoneDesc">Safe and fun games for kids and adults!</p>
                 </div>
                 <div class="footer-section">
-                    <h4><i class="fas fa-plus-circle"></i> <span data-i18n="addGames">إضافة ألعاب</span></h4>
-                    <p data-i18n="addGamesDesc">سهولة إضافة الألعاب الجديدة بدون قواعد بيانات!</p>
+                    <h4><i class="fas fa-plus-circle"></i> <span data-i18n="addGames">Add Games</span></h4>
+                    <p data-i18n="addGamesDesc">Easily add new games without a database!</p>
                 </div>
             </div>
             <div class="copyright">
-                <p data-i18n="copyright">© 2023 عالم الألعاب الممتع | تصميم وتطوير: فريق الإبداع</p>
+                <p data-i18n="copyright">© 2023 Fun Game World | Design: Creative Team</p>
             </div>
         </footer>
     </div>
@@ -106,14 +112,14 @@
     <div id="share-modal" class="share-modal">
         <div class="share-content">
             <div class="share-header">
-                <h3 data-i18n="shareTitle">مشاركة اللعبة</h3>
+                <h3 data-i18n="shareTitle">Share Game</h3>
                 <button id="close-share-modal"><i class="fas fa-times"></i></button>
             </div>
             <div class="share-options">
-                <a href="#" id="share-whatsapp" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="#" id="share-facebook" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i> فيسبوك</a>
-                <a href="#" id="share-twitter" target="_blank" class="share-btn twitter"><i class="fab fa-twitter"></i> تويتر</a>
-                <button id="share-copy" class="share-btn copy"><i class="fas fa-copy"></i> <span data-i18n="copyLink">نسخ الرابط</span></button>
+                <a href="#" id="share-whatsapp" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="#" id="share-facebook" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" id="share-twitter" target="_blank" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <button id="share-copy" class="share-btn copy"><i class="fas fa-copy"></i> <span data-i18n="copyLink">Copy Link</span></button>
             </div>
         </div>
     </div>
@@ -122,15 +128,15 @@
     <div id="settings-modal" class="share-modal">
         <div class="share-content settings-content">
             <div class="share-header">
-                <h3 data-i18n="settings">الإعدادات</h3>
+                <h3 data-i18n="settings">Settings</h3>
                 <button id="close-settings-modal"><i class="fas fa-times"></i></button>
             </div>
             <div class="settings-options">
                 <div class="setting-item">
-                    <span data-i18n="language">اللغة</span>
+                    <span data-i18n="language">Language</span>
                     <select id="language-select">
-                        <option value="ar">العربية</option>
                         <option value="en">English</option>
+                        <option value="ar">العربية</option>
                         <option value="de">Deutsch</option>
                         <option value="fr">Français</option>
                         <option value="hi">हिन्दी</option>
@@ -138,7 +144,7 @@
                     </select>
                 </div>
                 <div class="setting-item">
-                    <span data-i18n="themeColor">لون الموقع</span>
+                    <span data-i18n="themeColor">Theme Color</span>
                     <div class="color-picker-container">
                         <button class="color-option" style="background: #FFD700;" data-color="#FFD700"></button>
                         <button class="color-option" style="background: #FF0055;" data-color="#FF0055"></button>
@@ -147,8 +153,8 @@
                     </div>
                 </div>
                 <div class="setting-item">
-                    <span data-i18n="appearance">المظهر</span>
-                    <button id="theme-toggle-settings" class="theme-toggle-btn-settings"><i class="fas fa-sun"></i> <span data-i18n="lightMode">الوضع النهاري</span></button>
+                    <span data-i18n="appearance">Appearance</span>
+                    <button id="theme-toggle-settings" class="theme-toggle-btn-settings"><i class="fas fa-sun"></i> <span data-i18n="lightMode">Light Mode</span></button>
                 </div>
             </div>
         </div>
